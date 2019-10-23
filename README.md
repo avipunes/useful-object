@@ -11,22 +11,22 @@ npm install useful-object --save
 ## Usage
 
 ```sh
-    import "useful-object";
+import "useful-object";
 
-    ....
+....
 
-    const obj: any = {
-        name: {
-            fistName: "Avi",
-            lastName: "Punes"
-        }
-    };
+const obj: any = {
+    name: {
+        fistName: "Avi",
+        lastName: "Punes"
+    }
+};
 
-    obj.get("name.firstName") // return "Avi"
+obj.get("name.firstName") // return "Avi"
 ```
 
 ## Test
 
 ```sh
-    npm test
+npm test
 ```
