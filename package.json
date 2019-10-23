@@ -1,0 +1,31 @@
+{
+    "name": "useful-object",
+    "version": "0.1.0",
+    "description": "Typescript util to add useful methods to global Object type.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "tsc && ts-node ./spec/tests.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/avipunes/useful-object"
+    },
+    "keywords": [],
+    "author": "Avi Punes <avipunes@gmail.com",
+    "homepage": "https://github.com/avipunes/useful-object",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jasmine": "^3.4.4",
+        "jasmine": "^3.5.0",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.6.4",
+        "@types/lodash": "^4.14.144",
+        "lodash": "^4.17.15",
+        "rxjs": "^6.5.3"
+    },
+    "dependencies": {
+        "@types/node": "^12.11.5"
+    }
+}
