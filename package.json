@@ -1,9 +1,13 @@
 {
     "name": "useful-object",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "Typescript util to add useful methods to global Object type.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist/index.d.ts",
+        "dist/index.js"
+    ],
     "scripts": {
         "build": "tsc",
         "test": "tsc && ts-node ./spec/tests.ts"
