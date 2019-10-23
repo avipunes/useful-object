@@ -11,7 +11,7 @@ npm install useful-object --save
 ## Usage
 
 ```sh
-import "useful-object";
+import "useful-object"; // 16 KB
 
 ....
 
@@ -22,7 +22,7 @@ const obj: any = {
     }
 };
 
-obj.get("name.firstName") // return "Avi"
+obj.get("name.firstName"); // return "Avi"
 ```
 
 ## Test
