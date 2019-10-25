@@ -33,9 +33,33 @@ describe("useful object", () => {
         expect(lastName).toBeUndefined();
     });
 
+    it(`getSafe shouldn't return an existing value`, () => {
+        interface MyInterface {
+            name: {
+                firstName: string;
+                lastName: string;
+            };
+        }
+
+        let obj: MyInterface = {
+            name: {
+                firstName: "Avi",
+                lastName: "Punes"
+            }
+        };
+        const firstName: string = obj.getSafe<MyInterface, string>(
+            obj => obj.name.firstName
+        );
+        const lastName: string = obj.getSafe(
+            (obj: MyInterface) => obj.name.lastName
+        );
+        expect(firstName).toEqual(obj.name.firstName);
+        expect(lastName).toEqual(obj.name.lastName);
+    });
+
     // toPromise, toObservable methods
     it(`toPromise should be defined`, async () => {
-        const obj: any = {};
+        const obj = {};
         expect(obj["toPromise"]).toBeDefined();
         expect(obj.toPromise).toBeDefined();
         expect(typeof obj.toPromise).toBe("function");
@@ -43,6 +67,10 @@ describe("useful object", () => {
         expect(await obj.toPromise()).toEqual(obj);
         expect((await obj.toPromise()) === obj).toBeTruthy();
         expect((await obj.toPromise()) === { name: "avi" }).toBeFalsy();
+
+        const start = Date.now();
+        await obj.toPromise().delay(1000);
+        expect(Date.now() - start).toBeGreaterThanOrEqual(1000);
     });
 
     it(`toObservable should be defined`, async () => {

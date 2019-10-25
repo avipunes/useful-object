@@ -10,7 +10,7 @@ npm install useful-object --save
 
 ## Usage
 
-```sh
+```typescript
 import "useful-object"; // 16 KB
 
 ....
@@ -23,6 +23,27 @@ const obj: any = {
 };
 
 obj.get("name.firstName"); // return "Avi"
+```
+
+## Need type safety?
+
+```typescript
+interface MyInterface {
+    name: {
+        firstName: string;
+        lastName: string;
+    };
+}
+
+const obj: MyInterface = {
+    name: {
+        firstName: "Avi",
+        lastName: "Punes"
+    }
+};
+
+const firstName: string = obj.getSafe<MyInterface, string>(obj => obj.name.firstName); // Avi
+const lastName: string = obj.getSafe((obj: MyInterface) => obj.name.lastName); // Punes
 ```
 
 ## Test
