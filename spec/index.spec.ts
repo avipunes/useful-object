@@ -33,7 +33,7 @@ describe("useful object", () => {
         expect(lastName).toBeUndefined();
     });
 
-    it(`getSafe shouldn't return an existing value`, () => {
+    it(`getSafe should value`, () => {
         interface MyInterface {
             name: {
                 firstName: string;
@@ -58,8 +58,9 @@ describe("useful object", () => {
     });
 
     // toPromise, toObservable methods
-    it(`toPromise should be defined`, async () => {
+    it(`toPromise should be defined and return a promise`, async () => {
         const obj = {};
+
         expect(obj["toPromise"]).toBeDefined();
         expect(obj.toPromise).toBeDefined();
         expect(typeof obj.toPromise).toBe("function");
@@ -67,9 +68,12 @@ describe("useful object", () => {
         expect(await obj.toPromise()).toEqual(obj);
         expect((await obj.toPromise()) === obj).toBeTruthy();
         expect((await obj.toPromise()) === { name: "avi" }).toBeFalsy();
+        expect(await { name: "avi" }.get("name").toPromise()).toEqual("avi");
+    });
 
+    it(`Promise.delay be defined and delay x milliseconds`, async () => {
         const start = Date.now();
-        await obj.toPromise().delay(1000);
+        await new Object().toPromise().delay(1000);
         expect(Date.now() - start).toBeGreaterThanOrEqual(1000);
     });
 
@@ -83,5 +87,25 @@ describe("useful object", () => {
             expect(res).toEqual(obj);
             expect(res === { name: "avi" }).toBeFalsy();
         });
+
+        interface MyInterface {
+            name: {
+                firstName: string;
+                lastName?: string;
+            };
+        }
+
+        const myInterface: MyInterface = {
+            name: {
+                firstName: "Avi"
+            }
+        };
+
+        myInterface
+            .getSafe((myInterface: MyInterface) => myInterface.name.firstName)
+            .toObservable()
+            .subscribe((firstName: string) => {
+                expect(firstName).toEqual(myInterface.name.firstName);
+            });
     });
 });
