@@ -10,6 +10,8 @@ npm install useful-object --save
 
 ## Usage
 
+### get
+
 ```typescript
 import "useful-object"; // 16 KB
 
@@ -25,7 +27,7 @@ const obj: any = {
 obj.get("name.firstName"); // return "Avi"
 ```
 
-## Need type safety?
+### Need type safety?
 
 ```typescript
 interface MyInterface {
@@ -42,8 +44,35 @@ const obj: MyInterface = {
     }
 };
 
-const firstName: string = obj.getSafe<MyInterface, string>(obj => obj.name.firstName); // Avi
+const firstName: string = obj.getSafe<MyInterface, string>(
+    obj => obj.name.firstName
+); // Avi
 const lastName: string = obj.getSafe((obj: MyInterface) => obj.name.lastName); // Punes
+```
+
+---
+
+### toPromise
+
+```typescript
+const firstName: string = await obj.get("name.firstName").toPromise(); // Avi
+```
+
+```typescript
+const firstName: string = await obj
+    .get("name.firstName")
+    .toPromise()
+    .delay(1000); // Avi after one second
+```
+
+---
+
+### toObservable
+
+```typescript
+obj.get("name.firstName")
+    .toObservable()
+    .subscribe((firstName: string) => console.log(firstName)); // logs Avi
 ```
 
 ## Test
