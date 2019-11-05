@@ -22,12 +22,13 @@
     "license": "ISC",
     "devDependencies": {
         "@types/jasmine": "^3.4.4",
-        "jasmine": "^3.5.0",
-        "ts-node": "^8.4.1",
-        "typescript": "^3.6.4",
         "@types/lodash": "^4.14.144",
+        "jasmine": "^3.5.0",
+        "jasmine-console-reporter": "^3.1.0",
         "lodash": "^4.17.15",
-        "rxjs": "^6.5.3"
+        "rxjs": "^6.5.3",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.6.4"
     },
     "dependencies": {
         "@types/lodash": "^4.14.144",
