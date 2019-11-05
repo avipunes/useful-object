@@ -92,7 +92,7 @@ Promise.prototype.delay = function(milliseconds: number) {
     );
 };
 
-Array.prototype.subset = function subset(subsetPattern: string): Array<T> {
+Array.prototype.subset = function subset<T>(subsetPattern: string): Array<T> {
     try {
         const expression = /([\d|\.|\*]+)(\.{2})([\d|\.|\*]+)/;
         const regexRes = subsetPattern.match(expression);
