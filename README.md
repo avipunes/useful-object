@@ -10,7 +10,11 @@ npm install useful-object --save
 
 ## Usage
 
-### get
+---
+
+### Object
+
+#### get
 
 ```typescript
 import "useful-object"; // 16 KB
@@ -27,7 +31,7 @@ const obj: any = {
 obj.get("name.firstName"); // return "Avi"
 ```
 
-### Need type safety?
+#### Need type safety? use getSafe
 
 ```typescript
 interface MyInterface {
@@ -50,13 +54,25 @@ const firstName: string = obj.getSafe<MyInterface, string>(
 const lastName: string = obj.getSafe((obj: MyInterface) => obj.name.lastName); // Punes
 ```
 
----
-
-### toPromise
+#### toPromise
 
 ```typescript
 const firstName: string = await obj.get("name.firstName").toPromise(); // Avi
 ```
+
+#### toObservable
+
+```typescript
+obj.get("name.firstName")
+    .toObservable()
+    .subscribe((firstName: string) => console.log(firstName)); // logs Avi
+```
+
+---
+
+### Promise
+
+#### delay
 
 ```typescript
 const firstName: string = await obj
@@ -67,13 +83,20 @@ const firstName: string = await obj
 
 ---
 
-### toObservable
+### Array
+
+#### subset
 
 ```typescript
-obj.get("name.firstName")
-    .toObservable()
-    .subscribe((firstName: string) => console.log(firstName)); // logs Avi
+const array = [1, 50, 3, 10];
+array.subset("0..1"); // [1, 50]
+array.subset("*..1"); // [1, 50]
+array.subset("1..2"); // [50, 3]
+array.subset("2..*"); // [3, 10]
+array.subset("*..*"); // [1, 50, 3, 10]
 ```
+
+---
 
 ## Test
 
