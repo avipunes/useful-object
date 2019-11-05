@@ -17,7 +17,7 @@ npm install useful-object --save
 #### get
 
 ```typescript
-import "useful-object"; // 16 KB
+import "useful-object"; // 49.8K (gzipped: 11.8K)
 
 ....
 
