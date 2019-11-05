@@ -108,4 +108,19 @@ describe("useful object", () => {
                 expect(firstName).toEqual(myInterface.name.firstName);
             });
     });
+
+    it("should return subset by given pattern", () => {
+        const arr = [1, 4, 7, "5"];
+
+        expect(arr.subset("0..1").length).toEqual(2);
+        expect(arr.subset("0..*").length).toEqual(arr.length);
+        expect(arr.subset("0..1.5").length).toEqual(3);
+        expect(arr.subset("*..5").length).toEqual(4);
+        expect(arr.subset("*..2").length).toEqual(3);
+        expect(arr.subset("*..*").length).toEqual(arr.length);
+
+        const someArray = [{ name: "avi" }, "punes", { year: 2019 }];
+
+        expect(someArray.subset(`${1}..*`).length).toBe(2);
+    });
 });

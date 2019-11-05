@@ -31,14 +31,34 @@ declare global {
          */
         toPromise(): Promise<any>;
     }
-
-    /**
-     * @category Promise
-     * delays an expected promise
-     * @return the original promise.
-     */
     interface Promise<T> {
+        /**
+         * @category Promise
+         * delays an expected promise
+         * @return the original promise.
+         */
         delay(milliseconds: number): Promise<T>;
+    }
+
+    interface Array<T> {
+        /**
+         * @category Array
+         * @param subsetPattern - `StartIndex..EndIndex`
+         * @returns A subset of a given array with provided pattern `StartIndex..EndIndex`.
+         * Both start and end indexes are specified as "*".
+         * Start index as "*" means the beginning of the array.
+         * End index as "*" means the end of the array.
+         *
+         * @example
+         *
+         * const array = [1, 50, 3, 10];
+         * array.subset("0..1") // [1, 50]
+         * array.subset("*..1") // [1, 50]
+         * array.subset("1..2") // [50, 3]
+         * array.subset("2..*") // [3, 10]
+         * array.subset("*..*") // [1, 50, 3, 10]
+         */
+        subset(subsetPattern: string): Array<T>;
     }
 }
 
@@ -67,5 +87,27 @@ Object.prototype.toPromise = function() {
 };
 
 Promise.prototype.delay = function(milliseconds: number) {
-    return new Promise(resolve => setTimeout(() => resolve(this), milliseconds));
+    return new Promise(resolve =>
+        setTimeout(() => resolve(this), milliseconds)
+    );
+};
+
+Array.prototype.subset = function subset(subsetPattern: string): Array<T> {
+    try {
+        const expression = /([\d|\.|\*]+)(\.{2})([\d|\.|\*]+)/;
+        const regexRes = subsetPattern.match(expression);
+
+        if (!regexRes || !regexRes[1] || !regexRes[3]) {
+            return [];
+        }
+
+        const [from, to] = [
+            regexRes[1] === "*" ? 0 : Math.round(+regexRes[1]),
+            regexRes[3] === "*" ? undefined : Math.round(+regexRes[3] + 1)
+        ];
+
+        return this.slice(from, to);
+    } catch (error) {
+        return [];
+    }
 };
