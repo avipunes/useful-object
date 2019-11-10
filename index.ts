@@ -43,7 +43,7 @@ declare global {
     interface Array<T> {
         /**
          * @category Array
-         * @param subsetPattern - `StartIndex..EndIndex`
+         * @param pattern - `StartIndex..EndIndex`
          * @returns A subset of a given array with provided pattern `StartIndex..EndIndex`.
          * Both start and end indexes are specified as "*".
          * Start index as "*" means the beginning of the array.
@@ -58,7 +58,7 @@ declare global {
          * array.subset("2..*") // [3, 10]
          * array.subset("*..*") // [1, 50, 3, 10]
          */
-        subset(subsetPattern: string): Array<T>;
+        subset(pattern: string): Array<T>;
     }
 }
 
@@ -92,10 +92,10 @@ Promise.prototype.delay = function(milliseconds: number) {
     );
 };
 
-Array.prototype.subset = function subset<T>(subsetPattern: string): Array<T> {
+Array.prototype.subset = function subset<T>(pattern: string): Array<T> {
     try {
         const expression = /([\d|\.|\*]+)(\.{2})([\d|\.|\*]+)/;
-        const regexRes = subsetPattern.match(expression);
+        const regexRes = pattern.match(expression);
 
         if (!regexRes || !regexRes[1] || !regexRes[3]) {
             return [];

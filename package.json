@@ -1,7 +1,7 @@
 {
     "name": "useful-object",
-    "version": "0.3.3",
-    "description": "Typescript util to add useful methods to global Object type.",
+    "version": "0.3.4",
+    "description": "Typescript util to add useful methods to global Object, Array and more types.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [

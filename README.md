@@ -1,6 +1,6 @@
 # Useful Object
 
-Typescript util to add useful methods to global Object type.
+Typescript util to add useful methods to global Object, Array and more types.
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install useful-object --save
 
 ### Object
 
-#### get
+#### get(path: string, defaultValue?: any)
 
 ```typescript
 import "useful-object"; // 49.8K (gzipped: 11.8K)
@@ -31,7 +31,7 @@ const obj: any = {
 obj.get("name.firstName"); // return "Avi"
 ```
 
-#### Need type safety? use getSafe
+#### Need type safety? use getSafe<ObjectType, ExpectedReturnType>(function(obj: ObjectType): ExpectedReturnType)
 
 ```typescript
 interface MyInterface {
@@ -54,13 +54,13 @@ const firstName: string = obj.getSafe<MyInterface, string>(
 const lastName: string = obj.getSafe((obj: MyInterface) => obj.name.lastName); // Punes
 ```
 
-#### toPromise
+#### toPromise()
 
 ```typescript
 const firstName: string = await obj.get("name.firstName").toPromise(); // Avi
 ```
 
-#### toObservable
+#### toObservable()
 
 ```typescript
 obj.get("name.firstName")
@@ -72,7 +72,7 @@ obj.get("name.firstName")
 
 ### Promise
 
-#### delay
+#### delay(milliseconds: number)
 
 ```typescript
 const firstName: string = await obj
@@ -85,7 +85,7 @@ const firstName: string = await obj
 
 ### Array
 
-#### subset
+#### subset(pattern: string): Array<T>
 
 ```typescript
 const array = [1, 50, 3, 10];
