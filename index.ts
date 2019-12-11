@@ -60,6 +60,15 @@ declare global {
          */
         subset(pattern: string): Array<T>;
     }
+
+    interface Function {
+        /**
+         *
+         * @param defaultValue optional, the value returned if the resolved value is undefined or the function thrown out an error
+         * @param reject optional, if the function throws call this functions with the error - uses console.error as default
+         */
+        attempt<R>(defaultValue?: R, reject?: Function): R | undefined;
+    }
 }
 
 Object.prototype.get = function(path: string, defaultValue?: any) {
@@ -110,4 +119,19 @@ Array.prototype.subset = function subset<T>(pattern: string): Array<T> {
     } catch (error) {
         return [];
     }
+};
+
+Function.prototype.attempt = function attempt<R>(
+    defaultValue?: R,
+    reject?: Function
+): R | undefined {
+    let returnValue: R | undefined = defaultValue;
+
+    try {
+        returnValue = this();
+    } catch (error) {
+        reject ? reject(error) : console.error(error);
+    }
+
+    return returnValue;
 };

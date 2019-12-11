@@ -98,6 +98,34 @@ array.subset("*..*"); // [1, 50, 3, 10]
 
 ---
 
+### Function
+
+#### attempt<R>(defaultValue?: R, reject?: Function): R | undefined
+
+```typescript
+const throwingFunc = () => {
+    throw "Some Error";
+};
+throwingFunc.attempt();
+// console.error "Some Error"
+// returns undefined
+
+throwingFunc.attempt("Use this default value");
+// console.error "Some Error"
+// returns "Use this default value"
+
+throwingFunc.attempt("Use this default value", () => {});
+// returns "Use this default value"
+
+const notThrowingFunc = () => {
+    return 5 * 3;
+};
+
+notThrowingFunc.attempt<number>(); // 15
+```
+
+---
+
 ## Test
 
 ```sh
