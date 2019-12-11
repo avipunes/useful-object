@@ -1,7 +1,6 @@
 import "../index";
 
-describe("useful object", () => {
-    // `get` method
+describe("Object.prototype", () => {
     it(`get should be defined`, () => {
         const obj: any = {};
         expect(obj["get"]).toBeDefined();
@@ -57,7 +56,6 @@ describe("useful object", () => {
         expect(lastName).toEqual(obj.name.lastName);
     });
 
-    // toPromise, toObservable methods
     it(`toPromise should be defined and return a promise`, async () => {
         const obj = {};
 
@@ -69,12 +67,6 @@ describe("useful object", () => {
         expect((await obj.toPromise()) === obj).toBeTruthy();
         expect((await obj.toPromise()) === { name: "avi" }).toBeFalsy();
         expect(await { name: "avi" }.get("name").toPromise()).toEqual("avi");
-    });
-
-    it(`Promise.delay be defined and delay x milliseconds`, async () => {
-        const start = Date.now();
-        await new Object().toPromise().delay(1000);
-        expect(Date.now() - start).toBeGreaterThanOrEqual(1000);
     });
 
     it(`toObservable should be defined`, async () => {
@@ -108,7 +100,17 @@ describe("useful object", () => {
                 expect(firstName).toEqual(myInterface.name.firstName);
             });
     });
+});
 
+describe("Promise.prototype", () => {
+    it(`Promise.delay be defined and delay x milliseconds`, async () => {
+        const start = Date.now();
+        await new Object().toPromise().delay(1000);
+        expect(Date.now() - start).toBeGreaterThanOrEqual(1000);
+    });
+});
+
+describe("Array.prototype", () => {
     it("should return subset by given pattern", () => {
         const arr = [1, 4, 7, "5"];
 
@@ -122,5 +124,29 @@ describe("useful object", () => {
         const someArray = [{ name: "avi" }, "punes", { year: 2019 }];
 
         expect(someArray.subset(`${1}..*`).length).toBe(2);
+    });
+});
+
+describe("Function.prototype", () => {
+    it("shouldn't throw", () => {
+        const defaultValue: any = "Avi";
+        const throwingFunc = () => {
+            throw "Some Error";
+        };
+
+        const consoleErrorSpy = spyOn(console, "error");
+        expect(throwingFunc.attempt()).toBe(undefined);
+        expect(throwingFunc.attempt(defaultValue)).toEqual(defaultValue);
+        expect(throwingFunc.attempt(defaultValue, () => {})).toEqual(
+            defaultValue
+        );
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+
+        const notThrowingFunc = () => {
+            return 5 * 3;
+        };
+
+        expect(notThrowingFunc.attempt<number>()).toEqual(15);
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
     });
 });
