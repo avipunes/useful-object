@@ -127,7 +127,7 @@ describe("Array.prototype", () => {
     });
 });
 
-describe("Function.prototype", () => {
+fdescribe("Function.prototype", () => {
     it("shouldn't throw", () => {
         const defaultValue: any = "Avi";
         const throwingFunc = () => {
@@ -141,12 +141,23 @@ describe("Function.prototype", () => {
             defaultValue
         );
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+    });
 
+    it("should return", () => {
         const notThrowingFunc = () => {
             return 5 * 3;
         };
 
+        const consoleErrorSpy = spyOn(console, "error");
         expect(notThrowingFunc.attempt<number>()).toEqual(15);
-        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it("attemptAsync", async () => {
+        const asyncFunc = async (): Promise<string> => {
+            return new Promise(resolve => resolve("Avi"));
+        };
+
+        expect(await asyncFunc.attempt<Promise<string>>()).toEqual("Avi");
     });
 });
