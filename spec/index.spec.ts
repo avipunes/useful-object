@@ -127,7 +127,7 @@ describe("Array.prototype", () => {
     });
 });
 
-fdescribe("Function.prototype", () => {
+describe("Function.prototype", () => {
     it("shouldn't throw", () => {
         const defaultValue: any = "Avi";
         const throwingFunc = () => {
